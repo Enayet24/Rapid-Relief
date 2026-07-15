@@ -1,4 +1,4 @@
-# 🚨 Rapid Relief – Disaster Relief Management System
+# 🚨 Rapid Relief – Disaster Coordination System
 
 ## 📘 Overview
 
@@ -252,6 +252,6 @@ This project was developed as part of a **Software Engineering** course.
 Team Members:
 
 - [Enayet Ali Labib](github.com/Enayet24)
-- Member 2
-- Member 3
+- [Iffat Islam Aria](https://github.com/iffat-islam-aria)
+- [Israt Jahan Lamia](https://github.com/isratjahanlamia)
 - Member 4
