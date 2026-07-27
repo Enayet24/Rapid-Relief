@@ -1,6 +1,10 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import RequestForm from "./pages/RequestForm.jsx";
 import RequestList from "./pages/RequestList.jsx";
+import Login from "./pages/Login.jsx";
+import Signup from "./pages/Signup.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import { useAuth } from "./context/AuthContext.jsx";
 
 function Home() {
   return (
@@ -9,9 +13,7 @@ function Home() {
         <div>
           <h1 className="text-4xl font-bold">Disaster Relief Coordination Platform</h1>
           <p className="py-4">Report emergencies, track assistance, coordinate response.</p>
-          <Link to="/requests/new" className="btn btn-primary">
-            Report an Emergency
-          </Link>
+          <Link to="/requests/new" className="btn btn-primary">Report an Emergency</Link>
         </div>
       </div>
     </div>
@@ -19,27 +21,41 @@ function Home() {
 }
 
 function App() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-base-200">
       <div className="navbar bg-base-100 shadow-md px-4">
-        <Link to="/" className="btn btn-ghost text-xl">
-          🚨 Relief Platform
-        </Link>
+        <Link to="/" className="btn btn-ghost text-xl">🚨 Relief Platform</Link>
         <div className="ml-auto flex gap-2">
-          <Link to="/requests" className="btn btn-ghost">
-            My Requests
-          </Link>
-          <Link to="/requests/new" className="btn btn-ghost">
-            New Request
-          </Link>
+          {user ? (
+            <>
+              <Link to="/requests" className="btn btn-ghost">My Requests</Link>
+              <Link to="/requests/new" className="btn btn-ghost">New Request</Link>
+              <button
+                className="btn btn-ghost"
+                onClick={() => { logout(); navigate("/login"); }}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="btn btn-ghost">Log in</Link>
+              <Link to="/signup" className="btn btn-primary">Sign up</Link>
+            </>
+          )}
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-6">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/requests" element={<RequestList />} />
-          <Route path="/requests/new" element={<RequestForm />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/requests" element={<ProtectedRoute><RequestList /></ProtectedRoute>} />
+          <Route path="/requests/new" element={<ProtectedRoute><RequestForm /></ProtectedRoute>} />
         </Routes>
       </div>
     </div>
