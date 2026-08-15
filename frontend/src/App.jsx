@@ -3,6 +3,10 @@ import RequestForm from "./pages/RequestForm.jsx";
 import RequestList from "./pages/RequestList.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+import ShelterList from "./pages/ShelterList.jsx";
+import ShelterForm from "./pages/ShelterForm.jsx";
+import ResourceInventory from "./pages/ResourceInventory.jsx";
+import DonationList from "./pages/DonationList.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 
@@ -33,6 +37,14 @@ function App() {
             <>
               <Link to="/requests" className="btn btn-ghost">My Requests</Link>
               <Link to="/requests/new" className="btn btn-ghost">New Request</Link>
+              <Link to="/shelters" className="btn btn-ghost">Shelters</Link>
+              {user.role === "admin" && (
+                <>
+                  <Link to="/shelters/new" className="btn btn-ghost">Add Shelter</Link>
+                  <Link to="/resources" className="btn btn-ghost">Inventory</Link>
+                  <Link to="/donations" className="btn btn-ghost">Donations</Link>
+                </>
+              )}
               <button
                 className="btn btn-ghost"
                 onClick={() => { logout(); navigate("/login"); }}
@@ -56,6 +68,10 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/requests" element={<ProtectedRoute><RequestList /></ProtectedRoute>} />
           <Route path="/requests/new" element={<ProtectedRoute><RequestForm /></ProtectedRoute>} />
+          <Route path="/shelters" element={<ProtectedRoute><ShelterList /></ProtectedRoute>} />
+          <Route path="/shelters/new" element={<ProtectedRoute roles={["admin"]}><ShelterForm /></ProtectedRoute>} />
+          <Route path="/resources" element={<ProtectedRoute roles={["admin"]}><ResourceInventory /></ProtectedRoute>} />
+          <Route path="/donations" element={<ProtectedRoute roles={["admin"]}><DonationList /></ProtectedRoute>} />
         </Routes>
       </div>
     </div>
