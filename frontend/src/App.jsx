@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import RequestForm from "./pages/RequestForm.jsx";
 import RequestList from "./pages/RequestList.jsx";
 import Login from "./pages/Login.jsx";
@@ -7,17 +7,75 @@ import ShelterList from "./pages/ShelterList.jsx";
 import ShelterForm from "./pages/ShelterForm.jsx";
 import ResourceInventory from "./pages/ResourceInventory.jsx";
 import DonationList from "./pages/DonationList.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+import CitizenDashboard from "./pages/CitizenDashboard.jsx";
+import VolunteerDashboard from "./pages/VolunteerDashboard.jsx";
+import Navbar from "./components/Navbar.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 
 function Home() {
+  const { user } = useAuth();
+
+  // If already logged in, redirect to role-specific dashboard
+  if (user) {
+    if (user.role === "admin") return <Navigate to="/admin" replace />;
+    if (user.role === "volunteer") return <Navigate to="/volunteer" replace />;
+    return <Navigate to="/citizen" replace />;
+  }
+
   return (
-    <div className="hero min-h-[60vh]">
-      <div className="hero-content text-center">
+    <div className="hero min-h-[75vh] flex items-center justify-center">
+      <div className="hero-content text-center max-w-2xl px-4">
         <div>
-          <h1 className="text-4xl font-bold">Disaster Relief Coordination Platform</h1>
-          <p className="py-4">Report emergencies, track assistance, coordinate response.</p>
-          <Link to="/requests/new" className="btn btn-primary">Report an Emergency</Link>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4">
+            <span>🚨</span>
+            <span>MERN Stack Disaster Relief Coordination Platform</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-base-content leading-tight">
+            Rapid Relief & Disaster Response System
+          </h1>
+
+          <p className="py-5 text-sm sm:text-base text-base-content/70 max-w-xl mx-auto">
+            A centralized emergency coordination network connecting citizens in crisis, volunteer rescue squads, and disaster management authorities with real-time SMS alerts and live mapping.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
+            <Link to="/signup" className="btn btn-primary font-bold px-6 shadow-md">
+              Create Account
+            </Link>
+            <Link to="/login" className="btn btn-outline font-semibold px-6">
+              Sign In
+            </Link>
+          </div>
+
+          {/* Feature Highlights Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12 text-left">
+            <div className="p-4 rounded-xl bg-base-100 border border-base-200 shadow-sm">
+              <div className="text-2xl mb-1">🆘</div>
+              <h3 className="font-bold text-sm">Citizen Emergency Reporting</h3>
+              <p className="text-xs text-base-content/70 mt-1">
+                Instant emergency reporting with automatic priority scoring and SMS confirmations.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-base-100 border border-base-200 shadow-sm">
+              <div className="text-2xl mb-1">🦺</div>
+              <h3 className="font-bold text-sm">Volunteer Mission Board</h3>
+              <p className="text-xs text-base-content/70 mt-1">
+                Rescue task assignment, field status updates, and dispatch communications.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-xl bg-base-100 border border-base-200 shadow-sm">
+              <div className="text-2xl mb-1">📊</div>
+              <h3 className="font-bold text-sm">Administrative Command</h3>
+              <p className="text-xs text-base-content/70 mt-1">
+                Centralized dashboard analytics, shelter tracking, resource inventory, and Twilio SMS broadcast.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -25,55 +83,106 @@ function Home() {
 }
 
 function App() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
   return (
-    <div className="min-h-screen bg-base-200">
-      <div className="navbar bg-base-100 shadow-md px-4">
-        <Link to="/" className="btn btn-ghost text-xl">🚨 Relief Platform</Link>
-        <div className="ml-auto flex gap-2">
-          {user ? (
-            <>
-              <Link to="/requests" className="btn btn-ghost">My Requests</Link>
-              <Link to="/requests/new" className="btn btn-ghost">New Request</Link>
-              <Link to="/shelters" className="btn btn-ghost">Shelters</Link>
-              {user.role === "admin" && (
-                <>
-                  <Link to="/shelters/new" className="btn btn-ghost">Add Shelter</Link>
-                  <Link to="/resources" className="btn btn-ghost">Inventory</Link>
-                  <Link to="/donations" className="btn btn-ghost">Donations</Link>
-                </>
-              )}
-              <button
-                className="btn btn-ghost"
-                onClick={() => { logout(); navigate("/login"); }}
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="btn btn-ghost">Log in</Link>
-              <Link to="/signup" className="btn btn-primary">Sign up</Link>
-            </>
-          )}
-        </div>
-      </div>
+    <div className="min-h-screen bg-base-200 flex flex-col font-sans">
+      <Navbar />
 
-      <div className="container mx-auto px-4 py-6">
+      <main className="container mx-auto px-4 py-6 flex-1 max-w-7xl">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/requests" element={<ProtectedRoute><RequestList /></ProtectedRoute>} />
-          <Route path="/requests/new" element={<ProtectedRoute><RequestForm /></ProtectedRoute>} />
-          <Route path="/shelters" element={<ProtectedRoute><ShelterList /></ProtectedRoute>} />
-          <Route path="/shelters/new" element={<ProtectedRoute roles={["admin"]}><ShelterForm /></ProtectedRoute>} />
-          <Route path="/resources" element={<ProtectedRoute roles={["admin"]}><ResourceInventory /></ProtectedRoute>} />
-          <Route path="/donations" element={<ProtectedRoute roles={["admin"]}><DonationList /></ProtectedRoute>} />
+
+          {/* Role-Based Dashboards */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/citizen"
+            element={
+              <ProtectedRoute roles={["citizen"]}>
+                <CitizenDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/volunteer"
+            element={
+              <ProtectedRoute roles={["volunteer"]}>
+                <VolunteerDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Emergency Requests */}
+          <Route
+            path="/requests"
+            element={
+              <ProtectedRoute>
+                <RequestList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/requests/new"
+            element={
+              <ProtectedRoute>
+                <RequestForm />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Shelters */}
+          <Route
+            path="/shelters"
+            element={
+              <ProtectedRoute>
+                <ShelterList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/shelters/new"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <ShelterForm />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin Managed Modules */}
+          <Route
+            path="/resources"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <ResourceInventory />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/donations"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <DonationList />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Fallback route */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </div>
+      </main>
+
+      <footer className="footer footer-center p-4 bg-base-100 text-base-content/60 border-t border-base-200 text-xs">
+        <div>
+          <p>Rapid Relief • Disaster Coordination System (CSE471 Group 03)</p>
+        </div>
+      </footer>
     </div>
   );
 }
