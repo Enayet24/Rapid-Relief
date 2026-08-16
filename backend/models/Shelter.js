@@ -37,12 +37,12 @@ const shelterSchema = new mongoose.Schema(
 );
 
 // Keep status in sync with occupancy whenever it changes
-shelterSchema.pre("save", function (next) {
+shelterSchema.pre("save", function () {
   if (this.status !== "closed") {
     this.status = this.currentOccupancy >= this.capacity ? "full" : "open";
   }
-  next();
 });
+
 
 shelterSchema.index({ location: "2dsphere" });
 

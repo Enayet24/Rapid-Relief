@@ -10,6 +10,8 @@ const notificationRoutes = require("./routes/notificationRoutes");
 const shelterRoutes = require("./routes/shelterRoutes");
 const resourceRoutes = require("./routes/resourceRoutes");
 const donationRoutes = require("./routes/donationRoutes");
+const analyticsRoutes = require("./routes/analyticsRoutes");
+const smsRoutes = require("./routes/smsRoutes");
 
 const app = express();
 
@@ -27,9 +29,8 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/shelters", shelterRoutes);
 app.use("/api/resources", resourceRoutes);
 app.use("/api/donations", donationRoutes);
-
-// Other members mount their routes the same way, e.g.:
-// app.use("/api/volunteers", volunteerRoutes);
+app.use("/api/analytics", analyticsRoutes);
+app.use("/api/sms", smsRoutes);
 
 app.use((req, res) => res.status(404).json({ message: "Route not found" }));
 
