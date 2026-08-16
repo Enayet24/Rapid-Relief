@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import NotificationBell from "./NotificationBell.jsx";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -135,6 +136,7 @@ export default function Navbar() {
             )}
 
             {/* User Profile & Logout */}
+            <NotificationBell />
             <div className="dropdown dropdown-end ml-3">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-sm flex items-center gap-2 border border-base-300">
                 <div className="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">
