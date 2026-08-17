@@ -11,6 +11,7 @@ import AdminDashboard from "./pages/AdminDashboard.jsx";
 import CitizenDashboard from "./pages/CitizenDashboard.jsx";
 import VolunteerDashboard from "./pages/VolunteerDashboard.jsx";
 import Navbar from "./components/Navbar.jsx";
+import NotificationCenter from "./pages/NotificationCenter.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 
@@ -115,6 +116,15 @@ function App() {
             element={
               <ProtectedRoute roles={["volunteer"]}>
                 <VolunteerDashboard />
+              </ProtectedRoute>
+            }
+          />
+          {/* Notifications */}
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <NotificationCenter />
               </ProtectedRoute>
             }
           />
