@@ -4,10 +4,18 @@ import axiosClient from "../api/axiosClient";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem("user");
-    return stored ? JSON.parse(stored) : null;
-  });
+  // const [user, setUser] = useState(() => {
+  //   const stored = localStorage.getItem("user");
+  //   return stored ? JSON.parse(stored) : null;
+  // });
+
+  // Temporary bypass
+  const [user, setUser] = useState({
+  id: "temp-id-123",
+  name: "Test User",
+  email: "test@test.com",
+  role: "citizen",
+}); // TEMP: REVERT before real testing
 
   const login = async (email, password) => {
     const { data } = await axiosClient.post("/auth/login", { email, password });
