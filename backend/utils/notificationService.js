@@ -41,4 +41,19 @@ async function notify({ recipientId, type, message, relatedRequestId = null, sen
   return notification;
 }
 
-module.exports = { notify };
+/**
+ * Fan a single alert out to every admin account. Used for system-level alerts
+ * (low stock, shelter nearing capacity) that don't have one specific citizen
+ * or volunteer recipient — every admin needs to see them.
+ * (Module 2 - Iffat Islam Aria: inventory alerts & occupancy monitoring)
+ */
+async function notifyAdmins({ type, message, relatedRequestId = null, sendSmsAlert = false }) {
+  const admins = await User.find({ role: "admin", isActive: true }).select("_id");
+  return Promise.all(
+    admins.map((admin) =>
+      notify({ recipientId: admin._id, type, message, relatedRequestId, sendSmsAlert })
+    )
+  );
+}
+
+module.exports = { notify, notifyAdmins };
