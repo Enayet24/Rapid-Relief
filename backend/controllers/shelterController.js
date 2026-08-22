@@ -1,4 +1,14 @@
 const Shelter = require("../models/Shelter");
+const { notifyAdmins } = require("../utils/notificationService");
+
+// A shelter counts as "nearing capacity" once occupancy hits this fraction of capacity —
+// used to alert admins before it actually hits "full" (Module 2 occupancy monitoring).
+const NEAR_CAPACITY_RATIO = 0.9;
+
+function isNearOrFullCapacity(shelter) {
+  if (!shelter.capacity) return false;
+  return shelter.currentOccupancy / shelter.capacity >= NEAR_CAPACITY_RATIO;
+}
 
 // @route POST /api/shelters  @access admin
 async function createShelter(req, res) {
@@ -38,8 +48,19 @@ async function updateShelter(req, res) {
     const shelter = await Shelter.findById(req.params.id);
     if (!shelter) return res.status(404).json({ message: "Shelter not found" });
 
+    const wasNearOrFull = isNearOrFullCapacity(shelter);
+
     Object.assign(shelter, req.body);
     await shelter.save(); // triggers pre-save status sync
+
+    // Module 2: alert admins the first time this shelter crosses into near/full capacity
+    if (isNearOrFullCapacity(shelter) && !wasNearOrFull) {
+      notifyAdmins({
+        type: "shelter_capacity_alert",
+        message: `"${shelter.name}" is nearing capacity (${shelter.currentOccupancy}/${shelter.capacity} occupied).`,
+      }).catch((err) => console.warn("[Shelter] capacity notify error:", err.message));
+    }
+
     res.json(shelter);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -53,8 +74,19 @@ async function updateOccupancy(req, res) {
     const shelter = await Shelter.findById(req.params.id);
     if (!shelter) return res.status(404).json({ message: "Shelter not found" });
 
+    const wasNearOrFull = isNearOrFullCapacity(shelter);
+
     shelter.currentOccupancy = currentOccupancy;
     await shelter.save();
+
+    // Module 2: alert admins the first time this shelter crosses into near/full capacity
+    if (isNearOrFullCapacity(shelter) && !wasNearOrFull) {
+      notifyAdmins({
+        type: "shelter_capacity_alert",
+        message: `"${shelter.name}" is nearing capacity (${shelter.currentOccupancy}/${shelter.capacity} occupied).`,
+      }).catch((err) => console.warn("[Shelter] capacity notify error:", err.message));
+    }
+
     res.json(shelter);
   } catch (err) {
     res.status(400).json({ message: err.message });

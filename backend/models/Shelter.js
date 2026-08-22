@@ -43,6 +43,11 @@ shelterSchema.pre("save", function () {
   }
 });
 
+// Occupancy as a 0-100 percentage, used by the monitoring dashboard to flag shelters nearing capacity
+shelterSchema.virtual("occupancyRate").get(function () {
+  return this.capacity > 0 ? Math.round((this.currentOccupancy / this.capacity) * 100) : 0;
+});
+shelterSchema.set("toJSON", { virtuals: true });
 
 shelterSchema.index({ location: "2dsphere" });
 

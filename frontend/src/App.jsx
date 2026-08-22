@@ -7,6 +7,7 @@ import ShelterList from "./pages/ShelterList.jsx";
 import ShelterForm from "./pages/ShelterForm.jsx";
 import ResourceInventory from "./pages/ResourceInventory.jsx";
 import DonationList from "./pages/DonationList.jsx";
+import ShelterResourceMonitoring from "./pages/ShelterResourceMonitoring.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import CitizenDashboard from "./pages/CitizenDashboard.jsx";
 import VolunteerDashboard from "./pages/VolunteerDashboard.jsx";
@@ -179,6 +180,14 @@ function App() {
             element={
               <ProtectedRoute roles={["admin"]}>
                 <DonationList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/monitoring"
+            element={
+              <ProtectedRoute roles={["admin"]}>
+                <ShelterResourceMonitoring />
               </ProtectedRoute>
             }
           />

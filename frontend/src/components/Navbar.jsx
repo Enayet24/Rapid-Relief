@@ -78,6 +78,12 @@ export default function Navbar() {
                 >
                   🤝 Donations
                 </Link>
+                <Link
+                  to="/monitoring"
+                  className={`btn btn-sm btn-ghost ${isActive("/monitoring") ? "btn-active font-bold text-primary" : ""}`}
+                >
+                  🔎 Monitoring
+                </Link>
               </>
             )}
 
@@ -219,6 +225,7 @@ export default function Navbar() {
                   <Link to="/shelters" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🏠 Shelters</Link>
                   <Link to="/resources" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">📦 Inventory</Link>
                   <Link to="/donations" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🤝 Donations</Link>
+                  <Link to="/monitoring" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🔎 Monitoring</Link>
                 </>
               )}
 

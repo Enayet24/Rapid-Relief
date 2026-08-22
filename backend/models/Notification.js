@@ -11,6 +11,8 @@ const notificationSchema = new mongoose.Schema(
         "volunteer_assigned",
         "status_updated",
         "shelter_announcement",
+        "low_stock_alert",
+        "shelter_capacity_alert",
         "general",
       ],
       required: true,

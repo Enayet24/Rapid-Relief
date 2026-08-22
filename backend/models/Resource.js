@@ -6,7 +6,7 @@ const resourceSchema = new mongoose.Schema(
 
     category: {
       type: String,
-      enum: ["food", "water", "medicine", "clothing", "other"],
+      enum: ["food", "water", "medicine", "clothing", "shelter", "other"],
       required: true,
     },
 
