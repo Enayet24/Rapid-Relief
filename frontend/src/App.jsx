@@ -13,6 +13,8 @@ import CitizenDashboard from "./pages/CitizenDashboard.jsx";
 import VolunteerDashboard from "./pages/VolunteerDashboard.jsx";
 import Navbar from "./components/Navbar.jsx";
 import NotificationCenter from "./pages/NotificationCenter.jsx";
+import EmergencyMap from "./pages/EmergencyMap.jsx";
+import RequestNavigation from "./pages/RequestNavigation.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 
@@ -144,6 +146,24 @@ function App() {
             element={
               <ProtectedRoute>
                 <RequestForm />
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Maps & Navigation */}
+          <Route
+            path="/map"
+            element={
+              <ProtectedRoute>
+                <EmergencyMap />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/requests/:id/navigate"
+            element={
+              <ProtectedRoute roles={["volunteer", "admin"]}>
+                <RequestNavigation />
               </ProtectedRoute>
             }
           />

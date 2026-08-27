@@ -36,6 +36,8 @@ export default function RequestList() {
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
 
+  const canNavigate = user?.role === "volunteer" || user?.role === "admin";
+
   const fetchRequests = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -92,6 +94,9 @@ export default function RequestList() {
               🆘 Report Emergency
             </Link>
           )}
+          <Link to="/map" className="btn btn-sm btn-ghost">
+            🗺️ Live Map
+          </Link>
           <button onClick={fetchRequests} className="btn btn-sm btn-ghost">
             🔄 Refresh
           </button>
@@ -168,6 +173,7 @@ export default function RequestList() {
                   <th>Status</th>
                   <th>Location</th>
                   <th>Submitted</th>
+                  {canNavigate && <th>Actions</th>}
                 </tr>
               </thead>
               <tbody>
@@ -195,6 +201,13 @@ export default function RequestList() {
                     <td className="text-base-content/60 text-[11px]">
                       {new Date(r.createdAt).toLocaleString()}
                     </td>
+                    {canNavigate && (
+                      <td>
+                        <Link to={`/requests/${r._id}/navigate`} className="btn btn-xs btn-primary">
+                          🧭 Navigate
+                        </Link>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

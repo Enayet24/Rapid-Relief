@@ -67,6 +67,12 @@ export default function Navbar() {
                   🏠 Shelters
                 </Link>
                 <Link
+                  to="/map"
+                  className={`btn btn-sm btn-ghost ${isActive("/map") ? "btn-active font-bold text-primary" : ""}`}
+                >
+                  🗺️ Live Map
+                </Link>
+                <Link
                   to="/resources"
                   className={`btn btn-sm btn-ghost ${isActive("/resources") ? "btn-active font-bold text-primary" : ""}`}
                 >
@@ -108,6 +114,12 @@ export default function Navbar() {
                 >
                   🏠 Shelters
                 </Link>
+                <Link
+                  to="/map"
+                  className={`btn btn-sm btn-ghost ${isActive("/map") ? "btn-active font-bold text-primary" : ""}`}
+                >
+                  🗺️ Live Map
+                </Link>
               </>
             )}
 
@@ -137,6 +149,12 @@ export default function Navbar() {
                   className={`btn btn-sm btn-ghost ${isActive("/shelters") ? "btn-active font-bold text-primary" : ""}`}
                 >
                   🏠 Nearby Shelters
+                </Link>
+                <Link
+                  to="/map"
+                  className={`btn btn-sm btn-ghost ${isActive("/map") ? "btn-active font-bold text-primary" : ""}`}
+                >
+                  🗺️ Live Map
                 </Link>
               </>
             )}
@@ -223,6 +241,7 @@ export default function Navbar() {
                   <Link to="/admin" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">📊 Command Center</Link>
                   <Link to="/requests" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🚨 Emergency Requests</Link>
                   <Link to="/shelters" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🏠 Shelters</Link>
+                  <Link to="/map" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🗺️ Live Map</Link>
                   <Link to="/resources" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">📦 Inventory</Link>
                   <Link to="/donations" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🤝 Donations</Link>
                   <Link to="/monitoring" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🔎 Monitoring</Link>
@@ -234,6 +253,7 @@ export default function Navbar() {
                   <Link to="/volunteer" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🦺 Missions Dashboard</Link>
                   <Link to="/requests" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🚨 Requests List</Link>
                   <Link to="/shelters" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🏠 Shelters</Link>
+                  <Link to="/map" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🗺️ Live Map</Link>
                 </>
               )}
 
@@ -243,6 +263,7 @@ export default function Navbar() {
                   <Link to="/requests/new" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-error text-white justify-start">🆘 Report Emergency</Link>
                   <Link to="/requests" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">📋 My Requests</Link>
                   <Link to="/shelters" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🏠 Nearby Shelters</Link>
+                  <Link to="/map" onClick={() => setMobileMenuOpen(false)} className="btn btn-sm btn-ghost justify-start">🗺️ Live Map</Link>
                 </>
               )}
 
