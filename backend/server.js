@@ -13,6 +13,7 @@ const donationRoutes = require("./routes/donationRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
 const smsRoutes = require("./routes/smsRoutes");
 const mapsRoutes = require("./routes/mapsRoutes");
+const emailRoutes = require("./routes/emailRoutes");
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use("/api/donations", donationRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/sms", smsRoutes);
 app.use("/api/maps", mapsRoutes);
+app.use("/api/email", emailRoutes);
 
 app.use((req, res) => res.status(404).json({ message: "Route not found" }));
 

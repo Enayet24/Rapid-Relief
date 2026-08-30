@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema(
     isApprovedVolunteer: { type: Boolean, default: false },
     skills: [{ type: String }],
     isActive: { type: Boolean, default: true },
+
+    // Password recovery (Module 3 - Iffat Islam Aria: Nodemailer email integration)
+    resetPasswordToken: { type: String, default: null, select: false },
+    resetPasswordExpires: { type: Date, default: null, select: false },
   },
   { timestamps: true }
 );
