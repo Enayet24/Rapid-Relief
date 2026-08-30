@@ -3,6 +3,8 @@ import RequestForm from "./pages/RequestForm.jsx";
 import RequestList from "./pages/RequestList.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 import ShelterList from "./pages/ShelterList.jsx";
 import ShelterForm from "./pages/ShelterForm.jsx";
 import ResourceInventory from "./pages/ResourceInventory.jsx";
@@ -96,6 +98,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
 
           {/* Role-Based Dashboards */}
           <Route
