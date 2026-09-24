@@ -131,7 +131,7 @@ Responsibilities include:
 
 ## 🗺 Maps & Navigation
 
-Integrated using **Google Maps API**.
+Integrated using **OpenStreet API**.
 
 Features include:
 
@@ -162,7 +162,7 @@ Implemented using:
 
 - In-app notifications
 - Email notifications (Nodemailer)
-- SMS notifications *(planned/free API alternative)*
+- SMS notifications (Proposed Feature)
 
 Notifications include:
 
@@ -200,22 +200,16 @@ Notifications include:
 
 ## External APIs
 
-- Google Maps API
+- OpenStreet API
 - Weather API
 - Nodemailer
-- SMS Notification API *(Twilio / free alternative)*
+- SMS Notification API
 
 ---
 
 ## Deployment
 
-### Frontend
-
 - Vercel
-
-### Backend
-
-- Render
 
 ---
 
@@ -226,7 +220,7 @@ A complete **Software Requirements Specification (SRS)** document accompanies th
 
 📌 **Read the complete SRS here:**
 
-**🔗 [Software Requirements Specification (SRS)](https://docs.google.com/document/d/15WqbpCIN-hrYOgU8iwmV9rw4xsEF67QYfxQu3iQ1s7o/edit?tab=t.u5euev354cw)**
+**🔗 [Software Requirements Specification (SRS)](https://docs.google.com/document/d/1Ka_yzlnxrHAEgc9GaX0bk3MX76VSwc5wop-FHtvf03c/edit?usp=sharing)**
 
 ---
 
@@ -247,7 +241,7 @@ Potential future improvements include:
 
 # 👥 Project Team
 
-This project was developed as part of a **Software Engineering** course.
+This project was developed as part of our **System Design and Analytics** course.
 
 Team Members:
 
